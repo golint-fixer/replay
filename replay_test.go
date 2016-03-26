@@ -1,32 +1,30 @@
 package replay
 
 import (
-	"fmt"
 	"github.com/nbio/st"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
-	"time"
 )
 
 func TestReplay(t *testing.T) {
-	replayed := false
+	replayed := make(chan bool)
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		replayed = true
-		fmt.Fprintln(w, "Hello, replay")
+		replayed <- true
 	}))
 	defer ts.Close()
 
-	replay := New(ts.URL)
-	req := &http.Request{Header: make(http.Header), URL: &url.URL{}}
+	called := make(chan bool)
+	go func() {
+		replay := New(ts.URL)
+		req := &http.Request{Header: make(http.Header), URL: &url.URL{}}
 
-	called := false
-	replay.HandleHTTP(nil, req, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		called = true
-	}))
+		replay.HandleHTTP(nil, req, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			called <- true
+		}))
+	}()
 
-	time.Sleep(50 * time.Millisecond)
-	st.Expect(t, called, true)
-	st.Expect(t, replayed, true)
+	st.Expect(t, <-called, true)
+	st.Expect(t, <-replayed, true)
 }
