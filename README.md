@@ -1,16 +1,16 @@
-# replay [![Build Status](https://travis-ci.org/vinci-proxy/replay.png)](https://travis-ci.org/vinci-proxy/replay) [![GoDoc](https://godoc.org/github.com/vinci-proxy/replay?status.svg)](https://godoc.org/github.com/vinci-proxy/replay) [![API](https://img.shields.io/badge/status-stable-green.svg?style=flat)](https://godoc.org/github.com/vinci-proxy/replay) [![Coverage Status](https://coveralls.io/repos/github/vinci-proxy/replay/badge.svg?branch=master)](https://coveralls.io/github/vinci-proxy/replay?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/vinci-proxy/replay)](https://goreportcard.com/report/github.com/vinci-proxy/replay)
+# replay [![Build Status](https://travis-ci.org/vinxi/replay.png)](https://travis-ci.org/vinxi/replay) [![GoDoc](https://godoc.org/github.com/vinxi/replay?status.svg)](https://godoc.org/github.com/vinxi/replay) [![API](https://img.shields.io/badge/status-stable-green.svg?style=flat)](https://godoc.org/github.com/vinxi/replay) [![Coverage Status](https://coveralls.io/repos/github/vinxi/replay/badge.svg?branch=master)](https://coveralls.io/github/vinxi/replay?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/vinxi/replay)](https://goreportcard.com/report/github.com/vinxi/replay)
 
 Replay HTTP traffic to multiple servers easily.
 
 ## Installation
 
 ```bash
-go get -u gopkg.in/vinci-proxy/replay.v0
+go get -u gopkg.in/vinxi/replay.v0
 ```
 
 ## API
 
-See [godoc](https://godoc.org/github.com/vinci-proxy/replay) reference.
+See [godoc](https://godoc.org/github.com/vinxi/replay) reference.
 
 ## Examples
 
@@ -21,13 +21,13 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/vinci-proxy/replay.v0"
-  "gopkg.in/vinci-proxy/vinci.v0"
+  "gopkg.in/vinxi/replay.v0"
+  "gopkg.in/vinxi/vinxi.v0"
   "net/http"
 )
 
 func main() {
-  vs := vinci.NewServer(vinci.ServerOptions{Host: "localhost", Port: 3100})
+  vs := vinxi.NewServer(vinxi.ServerOptions{Host: "localhost", Port: 3100})
 
   handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
     fmt.Printf("Replay server reached: %s => %s\n", r.RemoteAddr, r.URL.String())

@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/vinci-proxy/replay.v0"
-	"gopkg.in/vinci-proxy/vinci.v0"
+	"gopkg.in/vinxi/replay.v0"
+	"gopkg.in/vinxi/vinxi.v0"
 	"net/http"
 )
 
 func main() {
-	vs := vinci.NewServer(vinci.ServerOptions{Host: "localhost", Port: 3100})
+	vs := vinxi.NewServer(vinxi.ServerOptions{Host: "localhost", Port: 3100})
 
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Replay server reached: %s => %s\n", r.RemoteAddr, r.URL.String())
